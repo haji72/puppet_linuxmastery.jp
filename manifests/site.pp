@@ -12,8 +12,7 @@ node 'vm02.linuxmastery.jp' {
 
 node 'vm03.linuxmastery.jp' {
   include base
-  include fortunecow::install
-  include fortunecow::motd
+  include fortunecow
 }
 
 node default {
