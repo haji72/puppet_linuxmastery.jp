@@ -1,0 +1,9 @@
+# /home/administrator/code/environments/production/data/common.yaml
+# common val
+servername: "%{::fqdn}"
+port: 80
+wp_root_password: ppassword
+wp_db_name: masterblog
+wp_user: master
+wp_user_password: ppassword
+

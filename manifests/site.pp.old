@@ -1,0 +1,70 @@
+# /home/administrator/code/enviroments/production/manifests/site.pp
+# notify test
+#$my_packages = ['tree', 'wget', 'curl', 'unzip']
+
+node 'vm01.linuxmastery.jp' {
+  include packages
+  include motd
+
+  user { 'gloomy':
+    ensure => absent,
+  }
+
+  user { 'cynical':
+    ensure => present,
+    password => '$1$VgD3Gbuy$dKpOMyf8CjhNhqbEUEP9r1',
+    managehome => true,
+    shell => '/bin/bash',
+  }
+
+  # package { $my_packages: }
+
+  package { 'apache2':
+    ensure => installed,
+    # before => Service['apache2'],
+  }
+
+  service { 'apache2':
+    ensure => running,
+    # require => Package['apache2'],i
+  }
+
+  file { 'index.html':
+    path => '/var/www/html/index.html',
+    content => "おはようございます\n",
+    require => Package['apache2'],
+  }
+
+  file { 'charset.conf':
+    path => '/etc/apache2/conf-available/charset.conf',
+    content => "AddDefaultCharset UTF-8\n",
+    require => Package['apache2'],
+    # notify => Service['apache2'],
+  }
+
+  Package['apache2'] -> File['charset.conf'] ~> Service['apache2']
+}
+
+node 'vm02.linuxmastery.jp' {
+  include packages
+  include motd
+
+  user { 'gloomy':
+    ensure => absent,
+  }
+
+  #file { '/etc/motd':
+  #  owner => 'root',
+  #  content => "\n
+  #    Hostname : ${::fqdn}
+  #    IP Address : ${::ipaddress}\n\n"
+  #}
+
+  #package { $my_packages: }
+}
+
+node default {
+  notify { 'default_message':
+    message => "===== default =====\n",
+  }
+}
