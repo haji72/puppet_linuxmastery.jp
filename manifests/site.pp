@@ -11,6 +11,7 @@ node 'vm02.linuxmastery.jp' {
 }
 
 node 'vm03.linuxmastery.jp' {
+  include webapp
   notify { '===== vm03 =====\n'}
 }
 
