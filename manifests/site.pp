@@ -11,8 +11,7 @@ node 'vm02.linuxmastery.jp' {
 }
 
 node 'vm03.linuxmastery.jp' {
-  include base
-  include fortunecow
+  notify { '===== vm03 =====\n'}
 }
 
 node default {
